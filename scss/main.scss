@@ -1,0 +1,72 @@
+// Resets File
+@import './resets';
+
+// Contains Color Variable
+@import './variables';
+
+// Function in SASS
+@function weight($weight-name){
+    @return map-get($font-weights , $weight-name );
+}
+
+// Defines Style
+@mixin flexCenter($direction){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true){
+    @if $light-theme{
+        background: lighten($primary-color, 100%);
+        color: darken($text-color, 100%);
+    }
+}
+
+@mixin mobile {
+    @media (max-width:$mobile){
+
+        @content;
+    }
+}
+
+// This code is compiled in main.css using plugin File
+body {
+  background: $primary-color;
+  color: $text-color;
+}
+
+.main{
+    @include flexCenter(column);
+    // Operator
+    width: calc(80% - 40%);
+    width: 80%;
+    margin: 0 auto;
+
+    #{&}__paragraph1{
+        font-weight: weight(bold);
+
+        &:hover{
+            color: pink;
+            
+        }
+    }
+
+    #{&}__paragraph2{
+        @extend .main__paragraph1;
+        &:hover{
+            color: $accent-color;
+        }
+    }
+
+    @include mobile{
+        flex-direction: column;
+    }
+}
+
+// @mixin light-theme applied here (Boolean)
+.light {
+    @include theme($light-theme: false);
+}
+
